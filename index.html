@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coastal Mechanics | Mobile Mechanic — Busselton, Dunsborough &amp; South West WA</title>
+<meta name="description" content="Mobile mechanic specialising in Japanese and European vehicles across Busselton, Dunsborough, Margaret River &amp; Bunbury. We come to you. Call Shehan Fernando.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- SVG grain filter definition -->
+<svg width="0" height="0" style="position:absolute">
+  <filter id="grain">
+    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feBlend in="SourceGraphic" mode="overlay" result="blend"/>
+    <feComposite in="blend" in2="SourceGraphic" operator="in"/>
+  </filter>
+</svg>
+
+<style>
+/* ── RESET & TOKENS ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:    #050505;
+  --charcoal: #0c0c0c;
+  --steel:    #181818;
+  --panel:    #121212;
+  --surface:  #1e1e1e;
+  --orange:   #ff5e00;
+  --orange-h: #ff7a20;
+  --orange-dim: rgba(255,94,0,0.12);
+  --orange-glow: rgba(255,94,0,0.2);
+  --white:    #ffffff;
+  --offwhite: #f0ede8;
+  --grey:     #666;
+  --lgrey:    #aaa;
+  --border:   rgba(255,255,255,0.06);
+  --border-h: rgba(255,255,255,0.1);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.4);
+  --shadow-elevated: 0 2px 6px rgba(0,0,0,0.6), 0 20px 60px rgba(0,0,0,0.5);
+  --radius-card: 20px;
+  --radius-sm: 12px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── DOT TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: radial-gradient(rgba(255,94,0,0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 0%, transparent 100%);
+}
+
+/* ── PARTICLE CANVAS ── */
+#fx { position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.25; }
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 20px; left: 50%; transform: translateX(-50%);
+  z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
+  padding: 8px 8px 8px 28px;
+  background: rgba(6,6,6,0.72);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  width: min(900px, calc(100vw - 32px));
+  transition: background 0.3s, border-color 0.3s;
+}
+nav.scrolled { background: rgba(6,6,6,0.92); border-color: var(--border-h); }
+
+.nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  color: var(--white); text-decoration: none; white-space: nowrap; letter-spacing: -0.02em;
+}
+.nav-logo span { color: var(--orange); }
+
+.nav-links { display: flex; gap: 2px; list-style: none; }
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--lgrey); text-decoration: none;
+  padding: 7px 16px; border-radius: 100px;
+  transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.07); }
+.nav-links a:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+.nav-cta {
+  background: var(--orange); color: #000 !important;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.82rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 11px 24px; border-radius: 100px; text-decoration: none;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(255,94,0,0.25);
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--orange-h); transform: scale(1.03); box-shadow: 0 6px 24px rgba(255,94,0,0.4); }
+.nav-cta:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+#hero {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 14px;
+  padding: 100px 24px 28px;
+  max-width: 1400px; margin: 0 auto;
+}
+
+.hero-main {
+  position: relative;
+  border-radius: 24px; overflow: hidden;
+  min-height: 70vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 44px;
+  /* mechanic photo as base layer, shader renders on top */
+  background-image: url("Brand%20Doc's/erik-mclean-3uHlGFnzPDU-unsplash.jpg");
+  background-size: cover;
+  background-position: center 30%;
+}
+
+/* photo sits at z-index 0 (background-image on .hero-main) */
+/* a dark tint layer sits just above the photo */
+.hero-photo-tint {
+  position: absolute; inset: 0; z-index: 0;
+  background: rgba(5,5,5,0.52);
+}
+/* shader canvas blends over the tinted photo */
+#hero-shader {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block; z-index: 1;
+  mix-blend-mode: screen;
+  opacity: 0.82;
+}
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    170deg,
+    rgba(5,5,5,0.0)  0%,
+    rgba(5,5,5,0.15) 25%,
+    rgba(5,5,5,0.68) 60%,
+    rgba(5,5,5,0.96) 100%
+  );
+  z-index: 2;
+}
+.hero-grain { z-index: 3; }
+.hero-content { z-index: 4; }
+
+/* Grain overlay on hero */
+.hero-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.35; pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--orange);
+  border: 1px solid rgba(255,94,0,0.3);
+  background: rgba(255,94,0,0.08);
+  padding: 6px 14px; border-radius: 100px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(8px);
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: pulse 2s infinite; }
+
+.hero-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.6rem, 4.5vw, 5rem);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: var(--orange);
+  margin-bottom: 4px;
+  animation: fadeUp 0.9s ease both;
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.5rem, 2.8vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  margin-bottom: 20px;
+  color: rgba(240,237,232,0.65);
+  animation: fadeUp 0.9s ease 0.08s both;
+}
+.hero-title .accent { color: var(--white); font-size: clamp(2rem, 3.5vw, 3.4rem); }
+
+.hero-sub {
+  font-size: 1.05rem; color: rgba(240,237,232,0.75);
+  line-height: 1.65; max-width: 420px;
+  margin-bottom: 32px;
+  animation: fadeUp 0.9s ease 0.15s both;
+}
+
+.hero-ctas {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  animation: fadeUp 0.9s ease 0.25s both;
+}
+
+.btn-p {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--orange); color: #000;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.9rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 14px 28px; border-radius: 100px; text-decoration: none;
+  box-shadow: 0 4px 20px rgba(255,94,0,0.35);
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.btn-p:hover { background: var(--orange-h); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,94,0,0.5); }
+.btn-p:active { transform: translateY(0); }
+.btn-p:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
+
+.btn-s {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.9rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 14px 28px; border-radius: 100px; text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+}
+.btn-s:hover { background: rgba(255,255,255,0.17); border-color: rgba(255,255,255,0.25); transform: translateY(-2px); }
+.btn-s:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+/* Hero side panel */
+.hero-side {
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+.side-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 16px 18px;
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
+  flex: 0 0 auto;
+}
+.side-card:hover { border-color: rgba(255,94,0,0.22); background: var(--steel); transform: translateX(-3px); }
+
+.side-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--orange); margin-bottom: 5px;
+}
+.side-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem; font-weight: 700; color: var(--white); margin-bottom: 4px;
+  display: flex; align-items: center; gap: 7px;
+}
+.side-card p { font-size: 0.78rem; color: var(--lgrey); line-height: 1.5; }
+
+.avail-dot {
+  display: inline-block; width: 8px; height: 8px;
+  border-radius: 50%; background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34,197,94,0.4);
+  animation: pulse-green 2s infinite;
+}
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+}
+
+.area-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.area-pill {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 4px 10px;
+  border-radius: 100px; background: var(--steel);
+  border: 1px solid var(--border); color: var(--lgrey);
+  transition: color 0.2s, border-color 0.2s;
+}
+.area-pill:hover { color: var(--orange); border-color: rgba(255,94,0,0.35); }
+
+.promo-card {
+  background: var(--orange);
+  border-radius: var(--radius-card); padding: 28px 24px;
+  position: relative; overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255,94,0,0.6),
+    0 0 30px rgba(255,94,0,0.5),
+    0 0 80px rgba(255,94,0,0.25);
+}
+.promo-card::before {
+  content: '⚡ LIMITED PROMO';
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.22em;
+  color: rgba(0,0,0,0.55);
+  margin-bottom: 6px; position: relative; z-index: 1;
+}
+.promo-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -48deg,
+    transparent, transparent 12px,
+    rgba(0,0,0,0.05) 12px, rgba(0,0,0,0.05) 24px
+  );
+}
+.promo-card-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5.5rem; color: #000; line-height: 0.9; position: relative; z-index: 1;
+  letter-spacing: -0.01em;
+}
+.promo-card-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(0,0,0,0.65);
+  margin-top: 8px; position: relative; z-index: 1; line-height: 1.4;
+}
+.promo-card-sub {
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.72rem; color: rgba(0,0,0,0.5);
+  position: relative; z-index: 1; margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════
+   MARQUEE STRIP
+═══════════════════════════════════════════ */
+.promo-strip {
+  background: var(--orange);
+  overflow: hidden; position: relative; z-index: 1;
+  padding: 14px 0; margin-top: -1px;
+}
+.promo-strip::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(0,0,0,0.04) 8px, rgba(0,0,0,0.04) 16px);
+  pointer-events: none;
+}
+.marquee-track {
+  display: flex; width: max-content;
+  animation: marquee 28s linear infinite;
+}
+.marquee-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem; letter-spacing: 0.16em; color: #000;
+  padding: 0 32px; white-space: nowrap;
+  display: flex; align-items: center; gap: 16px;
+}
+.marquee-item::before { content: '◆'; font-size: 0.35rem; opacity: 0.45; }
+@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+
+/* ═══════════════════════════════════════════
+   STATS
+═══════════════════════════════════════════ */
+.stats-row {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  max-width: 1400px; margin: 0 auto;
+  padding: 0 24px; position: relative; z-index: 1;
+}
+.stat-block {
+  padding: 40px 28px; text-align: center;
+  border-right: 1px solid var(--border);
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+  cursor: default;
+}
+.stat-block:last-child { border-right: none; }
+.stat-block::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0;
+  width: 0; height: 2px; background: var(--orange);
+  transition: width 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.stat-block:hover { background: rgba(255,94,0,0.04); }
+.stat-block:hover::after { width: 100%; }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem; color: var(--orange); line-height: 1; display: block;
+}
+.stat-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--grey); margin-top: 5px;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION ANATOMY
+═══════════════════════════════════════════ */
+.section-wrap {
+  max-width: 1400px; margin: 0 auto; padding: 80px 24px;
+  position: relative; z-index: 1;
+}
+
+.section-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--orange);
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+}
+.section-eyebrow::before { content: ''; width: 22px; height: 2px; background: var(--orange); flex-shrink: 0; }
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  letter-spacing: 0.02em; line-height: 1;
+  margin-bottom: 52px;
+}
+
+/* ═══════════════════════════════════════════
+   SERVICES BENTO
+═══════════════════════════════════════════ */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-auto-rows: 210px;
+  gap: 12px;
+}
+
+.bento-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card); padding: 28px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; overflow: hidden;
+  transition: border-color 0.25s, background 0.25s, transform 0.25s, box-shadow 0.25s;
+  cursor: default;
+}
+.bento-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(255,94,0,0.06) 0%, transparent 60%);
+  opacity: 0; transition: opacity 0.3s;
+}
+.bento-card:hover { border-color: rgba(255,94,0,0.25); background: var(--steel); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,94,0,0.1); }
+.bento-card:hover::before { opacity: 1; }
+
+.bento-card.featured { background: var(--steel); border-color: rgba(255,94,0,0.2); }
+.bento-card.tall { grid-row: span 2; }
+.bento-card.wide { grid-column: span 2; }
+
+.bento-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem; letter-spacing: 0.1em;
+  color: rgba(255,94,0,0.5); margin-bottom: 4px;
+}
+.bento-icon { font-size: 1.6rem; margin-bottom: 6px; }
+.bento-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: 4px;
+}
+.bento-desc { font-size: 0.85rem; color: var(--lgrey); line-height: 1.55; }
+.bento-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem; color: var(--orange); letter-spacing: 0.04em; line-height: 1;
+}
+.bento-price small { font-size: 0.9rem; color: var(--grey); }
+
+/* ═══════════════════════════════════════════
+   GALLERY
+═══════════════════════════════════════════ */
+.gallery-section {
+  max-width: 1400px; margin: 0 auto;
+  padding: 0 24px 80px; position: relative; z-index: 1;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-rows: 380px;
+  gap: 12px;
+}
+
+.gimg {
+  border-radius: var(--radius-card); overflow: hidden;
+  position: relative;
+}
+.gimg img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+  display: block;
+}
+.gimg:hover img { transform: scale(1.06); }
+
+.gimg-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(0deg, rgba(5,5,5,0.75) 0%, rgba(5,5,5,0) 50%);
+  transition: opacity 0.3s;
+}
+.gimg-cap {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 20px 22px;
+}
+.gimg-cap span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: rgba(255,255,255,0.6);
+}
+
+/* ═══════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════ */
+#about {
+  max-width: 1400px; margin: 0 auto;
+  padding: 0 24px 80px;
+  display: grid; grid-template-columns: 1fr 1.1fr;
+  gap: 80px; align-items: center;
+  position: relative; z-index: 1;
+}
+
+.about-img-wrap {
+  position: relative;
+}
+.about-img-frame {
+  border-radius: 24px; overflow: hidden;
+  aspect-ratio: 4/5;
+  position: relative;
+}
+.about-img-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+.about-img-frame:hover img { transform: scale(1.04); }
+
+.about-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(5,5,5,0.55) 100%);
+  mix-blend-mode: multiply;
+}
+
+/* Orange decorative corner line */
+.about-img-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: -16px; right: -16px;
+  width: calc(100% - 32px); height: calc(100% - 32px);
+  border: 2px solid rgba(255,94,0,0.2);
+  border-radius: 24px;
+  transition: transform 0.3s ease;
+}
+.about-img-wrap:hover::after { transform: translate(4px, 4px); }
+
+.about-badge {
+  position: absolute; bottom: 24px; left: 24px;
+  background: rgba(10,10,10,0.85);
+  border: 1px solid rgba(255,94,0,0.3);
+  backdrop-filter: blur(12px);
+  border-radius: 16px; padding: 16px 20px;
+  z-index: 2;
+}
+.about-badge-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem; color: var(--orange); line-height: 1;
+}
+.about-badge-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--lgrey); margin-top: 2px;
+}
+
+.about-content .section-eyebrow { margin-bottom: 12px; }
+.about-content .section-title { margin-bottom: 28px; }
+
+.about-content p {
+  font-size: 1rem; color: rgba(240,237,232,0.72);
+  line-height: 1.78; margin-bottom: 20px;
+}
+.about-content p:last-of-type { margin-bottom: 28px; }
+
+.about-principle {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 20px; border-radius: var(--radius-sm);
+  background: var(--panel); border: 1px solid var(--border);
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+.about-principle:hover { border-color: rgba(255,94,0,0.2); }
+.about-principle-icon {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: var(--orange-dim); border: 1px solid rgba(255,94,0,0.2);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.about-principle-text strong {
+  display: block; font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.88rem; font-weight: 700; color: var(--white); margin-bottom: 3px;
+}
+.about-principle-text span { font-size: 0.82rem; color: var(--lgrey); line-height: 1.5; }
+
+.about-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 20px; }
+.about-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 7px 16px;
+  border-radius: 100px;
+  background: var(--steel); border: 1px solid var(--border); color: var(--lgrey);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.about-tag:hover { background: var(--orange); color: #000; border-color: var(--orange); }
+
+/* ═══════════════════════════════════════════
+   COVERAGE AREAS
+═══════════════════════════════════════════ */
+#areas {
+  background: var(--charcoal);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative; z-index: 1;
+}
+.areas-inner {
+  max-width: 1400px; margin: 0 auto;
+  padding: 64px 24px;
+}
+.areas-grid {
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  margin-top: 48px;
+}
+.area-cell {
+  padding: 28px 24px; text-align: center;
+  border-right: 1px solid var(--border);
+  transition: background 0.2s;
+  cursor: default;
+}
+.area-cell:last-child { border-right: none; }
+.area-cell:hover { background: rgba(255,94,0,0.05); }
+.area-cell-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 5px;
+}
+.area-cell-dist {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--grey);
+}
+
+/* ═══════════════════════════════════════════
+   WHY US
+═══════════════════════════════════════════ */
+.why-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 12px; margin-top: 0;
+}
+.why-card {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: var(--radius-card); padding: 32px 28px;
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
+}
+.why-card:hover { border-color: rgba(255,94,0,0.22); background: var(--steel); transform: translateY(-4px); }
+.why-icon {
+  width: 44px; height: 44px;
+  background: var(--orange-dim); border: 1px solid rgba(255,94,0,0.2);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; margin-bottom: 18px;
+}
+.why-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.85rem; letter-spacing: 0.08em; color: rgba(255,94,0,0.4);
+  margin-bottom: 8px;
+}
+.why-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 10px;
+}
+.why-desc { font-size: 0.87rem; color: var(--lgrey); line-height: 1.6; }
+
+/* ═══════════════════════════════════════════
+   REVIEWS
+═══════════════════════════════════════════ */
+#reviews {
+  max-width: 1400px; margin: 0 auto;
+  padding: 0 24px 80px; position: relative; z-index: 1;
+}
+.reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.review-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card); padding: 32px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: 20px;
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
+}
+.review-card:hover { border-color: rgba(255,94,0,0.2); background: var(--steel); transform: translateY(-3px); }
+.review-stars { color: var(--orange); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 12px; }
+.review-text {
+  font-size: 0.92rem; color: var(--offwhite);
+  line-height: 1.72; flex: 1;
+  font-style: italic;
+}
+.review-text::before { content: '\201C'; color: var(--orange); font-size: 1.1rem; font-style: normal; }
+.review-text::after { content: '\201D'; color: var(--orange); font-size: 1.1rem; font-style: normal; }
+.review-line { display: flex; align-items: center; gap: 12px; }
+.review-av {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--orange-dim); border: 1px solid rgba(255,94,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.75rem;
+  color: var(--orange); flex-shrink: 0;
+}
+.review-name { font-weight: 600; font-size: 0.88rem; color: var(--white); }
+.review-loc { font-size: 0.75rem; color: var(--grey); }
+
+/* ═══════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════ */
+#contact {
+  max-width: 1400px; margin: 0 auto;
+  padding: 0 24px 120px;
+  display: grid; grid-template-columns: 1fr 1.1fr;
+  gap: 72px; align-items: start;
+  position: relative; z-index: 1;
+}
+.contact-info .section-title { margin-bottom: 20px; }
+.contact-info > p {
+  font-size: 1rem; color: var(--lgrey); line-height: 1.7; margin-bottom: 36px;
+}
+.contact-details { display: flex; flex-direction: column; gap: 12px; }
+.contact-detail {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 18px;
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s, background 0.2s;
+}
+.contact-detail:hover { border-color: rgba(255,94,0,0.25); background: var(--steel); }
+.contact-icon {
+  width: 38px; height: 38px; flex-shrink: 0;
+  background: var(--orange-dim); border: 1px solid rgba(255,94,0,0.2);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem;
+}
+.contact-dt-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--orange); margin-bottom: 3px;
+}
+.contact-dt-val { font-size: 0.9rem; color: var(--white); line-height: 1.5; }
+.contact-dt-val a { color: var(--white); text-decoration: none; transition: color 0.2s; }
+.contact-dt-val a:hover { color: var(--orange); }
+
+.form-wrap {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 24px; padding: 40px;
+  box-shadow: var(--shadow-elevated);
+}
+.form-wrap h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 24px;
+}
+.contact-form { display: flex; flex-direction: column; gap: 14px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--grey);
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: var(--steel); border: 1px solid var(--border);
+  color: var(--white); font-family: 'Barlow', sans-serif;
+  font-size: 0.92rem; padding: 12px 16px;
+  border-radius: var(--radius-sm); outline: none; width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none; appearance: none;
+}
+.form-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; cursor: pointer;
+}
+.form-group select option { background: #1a1a1a; }
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,94,0,0.1);
+}
+.form-group textarea { resize: vertical; min-height: 110px; }
+.form-submit {
+  background: var(--orange); color: #000;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  font-size: 1rem; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 16px; border: none; border-radius: var(--radius-sm);
+  cursor: pointer; width: 100%;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(255,94,0,0.25);
+}
+.form-submit:hover { background: var(--orange-h); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,94,0,0.4); }
+.form-submit:active { transform: translateY(0); }
+.form-submit:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
+.form-note { font-size: 0.75rem; color: var(--grey); text-align: center; margin-top: 4px; }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  background: var(--charcoal);
+  border-top: 1px solid var(--border);
+  padding: 36px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+  position: relative; z-index: 1;
+}
+.footer-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem; font-weight: 700; color: var(--white); letter-spacing: -0.02em;
+}
+.footer-logo span { color: var(--orange); }
+footer p { font-size: 0.78rem; color: var(--grey); line-height: 1.6; }
+footer a { color: var(--orange); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ═══════════════════════════════════════════
+   FLOATING ACTION BAR
+═══════════════════════════════════════════ */
+.fab {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  background: rgba(12,12,12,0.82);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 7px; border-radius: 100px;
+  display: flex; gap: 8px; z-index: 2000;
+  animation: fadeUp 0.9s ease 1s both;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+}
+.fab-btn {
+  padding: 13px 28px; border-radius: 100px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em;
+  text-transform: uppercase; text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+  display: flex; align-items: center; gap: 7px;
+}
+.fab-call {
+  background: var(--orange); color: #000;
+  box-shadow: 0 4px 16px rgba(255,94,0,0.35);
+}
+.fab-call:hover { transform: scale(1.04); box-shadow: 0 6px 24px rgba(255,94,0,0.5); }
+.fab-call:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
+.fab-sms { background: rgba(255,255,255,0.08); color: var(--white); }
+.fab-sms:hover { background: rgba(255,255,255,0.15); transform: scale(1.04); }
+.fab-sms:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+/* ═══════════════════════════════════════════
+   REVEAL ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; } 50% { opacity: 0.5; }
+}
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+.rv1 { transition-delay: 0.1s; } .rv2 { transition-delay: 0.2s; }
+.rv3 { transition-delay: 0.3s; } .rv4 { transition-delay: 0.4s; }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  nav { width: calc(100vw - 32px); gap: 16px; }
+  .nav-links { display: none; }
+  #hero { grid-template-columns: 1fr; }
+  .hero-main { min-height: 65vh; padding: 36px; }
+  .hero-side { flex-direction: row; flex-wrap: wrap; }
+  .side-card { flex: 1 1 calc(50% - 7px); }
+  .stats-row { grid-template-columns: repeat(2,1fr); }
+  .stat-block:nth-child(2) { border-right: none; }
+  .bento { grid-template-columns: repeat(2,1fr); }
+  .bento-card.wide { grid-column: span 2; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 240px 240px; }
+  .gimg:nth-child(1) { grid-column: 1/3; }
+  .gimg:nth-child(2) { grid-column: 1; grid-row: 2; }
+  .gimg:nth-child(3) { grid-column: 2; grid-row: 2; }
+  #about { grid-template-columns: 1fr; gap: 48px; }
+  .about-img-wrap::after { display: none; }
+  .about-badge { left: 16px; bottom: 16px; }
+  .areas-grid { grid-template-columns: repeat(3,1fr); }
+  .area-cell:nth-child(3) { border-right: none; }
+  .why-grid { grid-template-columns: 1fr 1fr; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  #contact { grid-template-columns: 1fr; gap: 40px; }
+  .form-row { grid-template-columns: 1fr; }
+  footer { flex-direction: column; text-align: center; padding: 28px 20px; }
+}
+
+@media (max-width: 640px) {
+  .hero-main { min-height: 72vh; padding: 26px; }
+  .hero-side { flex-direction: column; }
+  .side-card { flex: unset; }
+  .bento { grid-template-columns: 1fr; }
+  .bento-card.wide { grid-column: 1; }
+  .gallery-grid { grid-template-columns: 1fr; grid-template-rows: repeat(3, 240px); }
+  .gimg:nth-child(n) { grid-column: 1; grid-row: auto; }
+  .areas-grid { grid-template-columns: repeat(2,1fr); }
+  .area-cell:nth-child(2n) { border-right: none; }
+  .why-grid { grid-template-columns: 1fr; }
+  .fab { width: calc(100vw - 32px); justify-content: center; }
+  .fab-btn { flex: 1; justify-content: center; }
+  .form-wrap { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="fx"></canvas>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">COASTAL<span>.</span>MECHANICS</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#areas">Coverage</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-main reveal">
+    <div class="hero-photo-tint"></div>
+    <canvas id="hero-shader" aria-hidden="true"></canvas>
+    <div class="hero-overlay"></div>
+    <div class="hero-grain"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Busselton · Dunsborough · Margaret River · Bunbury</div>
+      <div class="hero-brand">COASTAL MECHANICS</div>
+      <h1 class="hero-title">
+        Precision Mobile <span class="accent">Mechanic.</span>
+      </h1>
+      <p class="hero-sub">Japanese &amp; European specialists. Qualified expertise delivered to your driveway — honest advice, real diagnostic tools, no workshop markup.</p>
+      <div class="hero-ctas">
+        <a href="tel:+61123123123" class="btn-p">📞 Call Shehan</a>
+        <a href="#services" class="btn-s">View Services ↓</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-side">
+    <div class="side-card reveal rv1">
+      <div class="side-label">Availability</div>
+      <div class="side-title"><span class="avail-dot"></span> Open for Bookings</div>
+      <p>Same-day service across the South West. Mon–Sat 7am–6pm. Emergency callouts available.</p>
+    </div>
+    <div class="side-card reveal rv2">
+      <div class="side-label">Service Region</div>
+      <div class="area-pills">
+        <span class="area-pill">Busselton</span>
+        <span class="area-pill">Dunsborough</span>
+        <span class="area-pill">Margaret River</span>
+        <span class="area-pill">Bunbury</span>
+        <span class="area-pill">Yallingup</span>
+        <span class="area-pill">Cowaramup</span>
+      </div>
+    </div>
+    <div class="promo-card reveal rv3">
+      <div class="promo-card-num">$150</div>
+      <div class="promo-card-label">Flat Rate · Full Service</div>
+      <div class="promo-card-sub">Labour + call-out included · No hidden fees</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="promo-strip" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-item">Logbook Servicing</div>
+    <div class="marquee-item">Roadside Assistance</div>
+    <div class="marquee-item">Brake Replacement</div>
+    <div class="marquee-item">Diagnostics</div>
+    <div class="marquee-item">Pre-Purchase Inspection</div>
+    <div class="marquee-item">4WD &amp; Ute Service</div>
+    <div class="marquee-item">Battery Replacement</div>
+    <div class="marquee-item">We Come To You</div>
+    <div class="marquee-item">No Workshop Markup</div>
+    <div class="marquee-item">Japanese Specialists</div>
+    <div class="marquee-item">European Specialists</div>
+    <div class="marquee-item">Same-Day Available</div>
+    <!-- duplicate for seamless loop -->
+    <div class="marquee-item">Logbook Servicing</div>
+    <div class="marquee-item">Roadside Assistance</div>
+    <div class="marquee-item">Brake Replacement</div>
+    <div class="marquee-item">Diagnostics</div>
+    <div class="marquee-item">Pre-Purchase Inspection</div>
+    <div class="marquee-item">4WD &amp; Ute Service</div>
+    <div class="marquee-item">Battery Replacement</div>
+    <div class="marquee-item">We Come To You</div>
+    <div class="marquee-item">No Workshop Markup</div>
+    <div class="marquee-item">Japanese Specialists</div>
+    <div class="marquee-item">European Specialists</div>
+    <div class="marquee-item">Same-Day Available</div>
+  </div>
+</div>
+
+<!-- ── STATS ── -->
+<div class="stats-row">
+  <div class="stat-block reveal"><span class="stat-num" data-count="3">0</span><span class="stat-label">Years Experience</span></div>
+  <div class="stat-block reveal rv1"><span class="stat-num">$0</span><span class="stat-label">Workshop Markup</span></div>
+  <div class="stat-block reveal rv2"><span class="stat-num">5+</span><span class="stat-label">Towns Covered</span></div>
+  <div class="stat-block reveal rv3"><span class="stat-num">Same Day</span><span class="stat-label">Service Available</span></div>
+</div>
+
+<!-- ── SERVICES ── -->
+<section id="services" class="section-wrap">
+  <div class="section-eyebrow reveal">What We Do</div>
+  <h2 class="section-title reveal">SERVICES &amp; PRICING</h2>
+  <div class="bento">
+
+    <div class="bento-card featured tall reveal">
+      <div class="bento-num">01</div>
+      <div>
+        <div class="bento-icon">🔧</div>
+        <div class="bento-name">Car Service</div>
+        <div class="bento-desc">Oil &amp; filter, fluid top-ups, safety inspection. Logbook stamped on site.</div>
+      </div>
+      <div class="bento-price">$120 <small>AUD</small></div>
+    </div>
+
+    <div class="bento-card reveal rv1">
+      <div class="bento-num">02</div>
+      <div>
+        <div class="bento-icon">🚙</div>
+        <div class="bento-name">4WD / SUV Service</div>
+      </div>
+      <div class="bento-price">$150 <small>AUD</small></div>
+    </div>
+
+    <div class="bento-card reveal rv2">
+      <div class="bento-num">03</div>
+      <div>
+        <div class="bento-icon">🛑</div>
+        <div class="bento-name">Brake Replacement</div>
+      </div>
+      <div class="bento-price">$150 <small>AUD</small></div>
+    </div>
+
+    <div class="bento-card reveal rv3">
+      <div class="bento-num">08</div>
+      <div>
+        <div class="bento-icon">🚨</div>
+        <div class="bento-name">Roadside Assistance</div>
+        <div class="bento-desc">Broken down anywhere in the South West? We come to you fast.</div>
+      </div>
+      <div class="bento-price">POA</div>
+    </div>
+
+    <div class="bento-card wide reveal rv1">
+      <div class="bento-num">04</div>
+      <div>
+        <div class="bento-icon">📋</div>
+        <div class="bento-name">Logbook Servicing</div>
+        <div class="bento-desc">Keep your warranty valid. Manufacturer-spec service delivered to your door.</div>
+      </div>
+      <div class="bento-price">From $120 <small>AUD</small></div>
+    </div>
+
+    <div class="bento-card reveal rv2">
+      <div class="bento-num">05</div>
+      <div>
+        <div class="bento-icon">💡</div>
+        <div class="bento-name">Diagnostic Scan</div>
+      </div>
+      <div class="bento-price">$80 <small>AUD</small></div>
+    </div>
+
+    <div class="bento-card reveal rv3">
+      <div class="bento-num">06</div>
+      <div>
+        <div class="bento-icon">🔍</div>
+        <div class="bento-name">Pre-Purchase Inspection</div>
+      </div>
+      <div class="bento-price">$100 <small>AUD</small></div>
+    </div>
+
+    <div class="bento-card reveal rv1">
+      <div class="bento-num">07</div>
+      <div>
+        <div class="bento-icon">🔋</div>
+        <div class="bento-name">Battery Replacement</div>
+      </div>
+      <div class="bento-price">POA <small>parts + labour</small></div>
+    </div>
+
+    <div class="bento-card wide reveal rv2">
+      <div class="bento-num">09</div>
+      <div>
+        <div class="bento-icon">⚡</div>
+        <div class="bento-name">Spark Plugs / Air Filter</div>
+        <div class="bento-desc">Quick performance refresh. Done in your driveway, no appointment hassle.</div>
+      </div>
+      <div class="bento-price">From $80 <small>AUD</small></div>
+    </div>
+
+    <div class="bento-card reveal rv3">
+      <div class="bento-num">10</div>
+      <div>
+        <div class="bento-icon">💎</div>
+        <div class="bento-name">Flat Rate Promo</div>
+        <div class="bento-desc">Labour + call-out. Transparent, no surprises.</div>
+      </div>
+      <div class="bento-price">$150 <small>AUD</small></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── GALLERY ── -->
+<div class="gallery-section">
+  <div class="gallery-grid">
+    <div class="gimg reveal">
+      <img
+        src="Brand%20Doc's/oli-woodman-oZOb6z2hWTU-unsplash.jpg"
+        alt="Mechanic working on classic Porsche outdoors"
+        loading="lazy" decoding="async"
+      >
+      <div class="gimg-overlay"></div>
+      <div class="gimg-cap"><span>Mobile Service · Anywhere, Anytime</span></div>
+    </div>
+    <div class="gimg reveal rv1">
+      <img
+        src="Brand%20Doc's/sdl-sanjaya-Cnlhywl33qk-unsplash.jpg"
+        alt="Honda engine bay close-up"
+        loading="lazy" decoding="async"
+      >
+      <div class="gimg-overlay"></div>
+      <div class="gimg-cap"><span>Japanese Specialists</span></div>
+    </div>
+    <div class="gimg reveal rv2">
+      <img
+        src="Brand%20Doc's/madeline-liu-w9HTzuFGKp0-unsplash.jpg"
+        alt="AMG Mercedes engine detail"
+        loading="lazy" decoding="async"
+      >
+      <div class="gimg-overlay"></div>
+      <div class="gimg-cap"><span>European Precision</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="about-img-wrap reveal">
+    <div class="about-img-frame">
+      <img
+        src="Brand%20Doc's/maxim-hopman-s4d_ESS0ylA-unsplash.jpg"
+        alt="Mechanic working on vehicle fuse box"
+        loading="lazy" decoding="async"
+      >
+      <div class="about-img-overlay"></div>
+    </div>
+    <div class="about-badge">
+      <div class="about-badge-num">3+</div>
+      <div class="about-badge-label">Years Experience</div>
+    </div>
+  </div>
+
+  <div class="about-content">
+    <div class="section-eyebrow reveal">About Coastal Mechanics</div>
+    <h2 class="section-title reveal">THE EXPERTISE<br>OF A HIGH-END<br><span style="color:var(--orange)">SHOP.</span></h2>
+
+    <p class="reveal">With three years of dedicated experience specialising in the precision of Japanese engineering and the complexity of European imports, I bring the expertise of a high-end shop directly to your driveway. Whether you are driving a reliable daily commuter or a high-performance German machine, I provide meticulous maintenance and repair tailored to your vehicle's specific needs.</p>
+
+    <p class="reveal rv1">I founded this business on a simple principle: Professional service shouldn't require a waiting room. I focus on clear communication, transparent pricing, and the convenience of getting you back on the road without the dealership hassle.</p>
+
+    <div class="about-principle reveal rv2">
+      <div class="about-principle-icon">🔍</div>
+      <div class="about-principle-text">
+        <strong>Clear Communication</strong>
+        <span>You know exactly what's being done, why, and what it costs — before any work begins.</span>
+      </div>
+    </div>
+    <div class="about-principle reveal rv3">
+      <div class="about-principle-icon">💰</div>
+      <div class="about-principle-text">
+        <strong>Transparent Pricing</strong>
+        <span>Flat rates, no hidden fees, no workshop overheads passed on to you.</span>
+      </div>
+    </div>
+
+    <div class="about-tags reveal rv2">
+      <span class="about-tag">Qualified Mechanic</span>
+      <span class="about-tag">European Vehicles</span>
+      <span class="about-tag">Japanese Vehicles</span>
+      <span class="about-tag">4WD &amp; Utes</span>
+      <span class="about-tag">Logbook Servicing</span>
+      <span class="about-tag">Diagnostics</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── COVERAGE ── -->
+<div id="areas">
+  <div class="areas-inner">
+    <div class="section-eyebrow reveal">Service Region</div>
+    <h2 class="section-title reveal" style="margin-bottom:0">WE COME TO YOU</h2>
+    <p style="color:var(--lgrey);font-size:0.95rem;margin-top:12px;" class="reveal rv1">Based in the South West — if you're in the region, we'll come to you.</p>
+    <div class="areas-grid reveal rv2">
+      <div class="area-cell"><div class="area-cell-name">Busselton</div><div class="area-cell-dist">Base Location</div></div>
+      <div class="area-cell"><div class="area-cell-name">Dunsborough</div><div class="area-cell-dist">~15 km</div></div>
+      <div class="area-cell"><div class="area-cell-name">Yallingup</div><div class="area-cell-dist">~20 km</div></div>
+      <div class="area-cell"><div class="area-cell-name">Margaret River</div><div class="area-cell-dist">~50 km</div></div>
+      <div class="area-cell"><div class="area-cell-name">Bunbury</div><div class="area-cell-dist">~55 km</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── WHY US ── -->
+<section class="section-wrap">
+  <div class="section-eyebrow reveal">The Difference</div>
+  <h2 class="section-title reveal">WHY COASTAL MECHANICS</h2>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-icon">🏠</div>
+      <div class="why-num">01</div>
+      <div class="why-title">We Come to You</div>
+      <div class="why-desc">Home, work, roadside — wherever your car is, that's where we work. No towing, no drop-off.</div>
+    </div>
+    <div class="why-card reveal rv1">
+      <div class="why-icon">💸</div>
+      <div class="why-num">02</div>
+      <div class="why-title">No Workshop Markup</div>
+      <div class="why-desc">No showroom overheads. You pay for the skill and the parts — nothing else.</div>
+    </div>
+    <div class="why-card reveal rv2">
+      <div class="why-icon">🛠</div>
+      <div class="why-num">03</div>
+      <div class="why-title">Qualified Specialist</div>
+      <div class="why-desc">3+ years specialising in European and Japanese vehicles. Not a backyard operation.</div>
+    </div>
+    <div class="why-card reveal rv3">
+      <div class="why-icon">🌊</div>
+      <div class="why-num">04</div>
+      <div class="why-title">Local to the South West</div>
+      <div class="why-desc">Visiting the region? Broke down on Caves Road? We know the area and we'll get to you fast.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REVIEWS ── -->
+<section id="reviews">
+  <div class="section-eyebrow reveal">Customer Reviews</div>
+  <h2 class="section-title reveal">WHAT PEOPLE SAY</h2>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Shehan came to my workplace and had the service done in under an hour. Half the price of the dealer and way more convenient. Will never go back to a workshop.</p>
+      </div>
+      <div class="review-line">
+        <div class="review-av">SC</div>
+        <div><div class="review-name">Sarah C.</div><div class="review-loc">Busselton</div></div>
+      </div>
+    </div>
+    <div class="review-card reveal rv1">
+      <div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Broke down on Caves Road and Shehan was there within the hour. Diagnosed the fault on the spot and had me back on the road same afternoon. Absolute legend.</p>
+      </div>
+      <div class="review-line">
+        <div class="review-av">MR</div>
+        <div><div class="review-name">Mike R.</div><div class="review-loc">Dunsborough</div></div>
+      </div>
+    </div>
+    <div class="review-card reveal rv2">
+      <div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Pre-purchase inspection on a used ute — he found two issues the seller hadn't mentioned. Saved me from a bad buy and helped negotiate the price down. Worth every cent.</p>
+      </div>
+      <div class="review-line">
+        <div class="review-av">JP</div>
+        <div><div class="review-name">James P.</div><div class="review-loc">Margaret River</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="contact-info">
+    <div class="section-eyebrow reveal">Get In Touch</div>
+    <h2 class="section-title reveal">BOOK A<br>SERVICE</h2>
+    <p class="reveal">Ready to get sorted? Call, SMS, or fill out the form — we'll get back to you within a few hours. Same-day bookings available.</p>
+    <div class="contact-details">
+      <div class="contact-detail reveal">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-dt-label">Phone / SMS</div>
+          <div class="contact-dt-val"><a href="tel:+61123123123">+61 123 123 123</a></div>
+        </div>
+      </div>
+      <div class="contact-detail reveal rv1">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-dt-label">Service Area</div>
+          <div class="contact-dt-val">Busselton · Dunsborough · Yallingup · Margaret River · Bunbury</div>
+        </div>
+      </div>
+      <div class="contact-detail reveal rv2">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <div class="contact-dt-label">Hours</div>
+          <div class="contact-dt-val">Mon–Sat: 7am–6pm · Emergency callouts available</div>
+        </div>
+      </div>
+      <div class="contact-detail reveal rv3">
+        <div class="contact-icon">💳</div>
+        <div>
+          <div class="contact-dt-label">Payment</div>
+          <div class="contact-dt-val">Cash · Bank Transfer · Card accepted</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-wrap reveal">
+    <h3>Send an Enquiry</h3>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="Jane Smith" required autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="04xx xxx xxx" required autocomplete="tel">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="service">Service Needed</label>
+        <select id="service">
+          <option value="" disabled selected>Select a service...</option>
+          <option>Car Service (Standard) — $120</option>
+          <option>4WD / SUV / Van Service — $150</option>
+          <option>Brake Replacement — $150</option>
+          <option>Battery Replacement</option>
+          <option>Logbook Servicing — From $120</option>
+          <option>Pre-Purchase Inspection — $100</option>
+          <option>Diagnostic Scan — $80</option>
+          <option>Spark Plugs / Air Filter — From $80</option>
+          <option>Roadside Assistance</option>
+          <option>Flat Rate Promo — $150</option>
+          <option>Other / Not Sure</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="vehicle">Vehicle Make &amp; Model</label>
+          <input type="text" id="vehicle" placeholder="e.g. Toyota RAV4" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="location">Your Location</label>
+          <input type="text" id="location" placeholder="e.g. Dunsborough" autocomplete="off">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="details">Additional Details</label>
+        <textarea id="details" placeholder="Describe the issue or preferred time..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send Enquiry →</button>
+      <p class="form-note">We'll reply within a few hours. Or just call/text directly.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">COASTAL<span>.</span>MECHANICS</div>
+  <p>
+    © 2025 Coastal Mechanics · Shehan Fernando · <a href="tel:+61123123123">+61 123 123 123</a><br>
+    Mobile Mechanic · Busselton · Dunsborough · Margaret River · Bunbury · South West WA
+  </p>
+</footer>
+
+<!-- ── FLOATING ACTION BAR ── -->
+<div class="fab">
+  <a href="tel:+61123123123" class="fab-btn fab-call">📞 Call Shehan</a>
+  <a href="sms:+61123123123" class="fab-btn fab-sms">💬 SMS Booking</a>
+</div>
+
+<script>
+/* ── HERO SHADER (WebGL aurora — orange palette) ── */
+(function () {
+  const canvas = document.getElementById('hero-shader');
+  if (!canvas) return;
+  const gl = canvas.getContext('webgl', { alpha: false, antialias: false })
+           || canvas.getContext('experimental-webgl', { alpha: false });
+  if (!gl) return;
+
+  const VS = `
+    attribute vec2 a_pos;
+    void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
+  `;
+
+  const FS = `
+    precision mediump float;
+    uniform float iTime;
+    uniform vec2  iResolution;
+
+    #define NUM_OCTAVES 3
+
+    float rand(vec2 n) {
+      return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+    }
+    float noise(vec2 p) {
+      vec2 ip = floor(p);
+      vec2 u  = fract(p);
+      u = u * u * (3.0 - 2.0 * u);
+      return mix(
+        mix(rand(ip), rand(ip + vec2(1.0, 0.0)), u.x),
+        mix(rand(ip + vec2(0.0, 1.0)), rand(ip + vec2(1.0, 1.0)), u.x), u.y
+      );
+    }
+    float fbm(vec2 x) {
+      float v = 0.0; float a = 0.3;
+      vec2 shift = vec2(100.0);
+      mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));
+      for (int i = 0; i < NUM_OCTAVES; i++) {
+        v += a * noise(x); x = rot * x * 2.0 + shift; a *= 0.4;
+      }
+      return v;
+    }
+    /* tanh polyfill — safe for WebGL 1.0 */
+    vec4 tanh4(vec4 x) {
+      x = clamp(x, -8.0, 8.0);
+      vec4 e2 = exp(2.0 * x);
+      return (e2 - 1.0) / (e2 + 1.0);
+    }
+
+    void main() {
+      vec2 shake = vec2(sin(iTime * 1.2) * 0.005, cos(iTime * 2.1) * 0.005);
+      vec2 p = ((gl_FragCoord.xy + shake * iResolution) - iResolution * 0.5)
+               / iResolution.y * mat2(6.0, -4.0, 4.0, 6.0);
+      vec4 o = vec4(0.0);
+      float f = 2.0 + fbm(p + vec2(iTime * 5.0, 0.0)) * 0.5;
+
+      for (int idx = 0; idx < 35; idx++) {
+        float i = float(idx);
+        vec2 v = p
+          + cos(i * i + (iTime + p.x * 0.08) * 0.025 + i * vec2(13.0, 11.0)) * 3.5
+          + vec2(sin(iTime * 3.0 + i) * 0.003, cos(iTime * 3.5 - i) * 0.003);
+
+        float tailNoise = fbm(v + vec2(iTime * 0.5, i)) * 0.3 * (1.0 - i / 35.0);
+
+        /* ── Orange / amber palette to match brand #ff5e00 ── */
+        vec4 col = vec4(
+          0.88 + 0.12 * sin(i * 0.2  + iTime * 0.40),               /* red:   0.88–1.00 */
+          0.20 + 0.30 * (0.5 + 0.5 * cos(i * 0.3  + iTime * 0.50)), /* green: 0.20–0.50 */
+          0.01 + 0.07 * (0.5 + 0.5 * sin(i * 0.4  + iTime * 0.30)), /* blue:  0.01–0.08 */
+          1.0
+        );
+
+        float thinness = smoothstep(0.0, 1.0, i / 35.0) * 0.6;
+        vec2  vSafe = max(abs(v), vec2(0.0001));
+        vec2  vClamped = vec2(v.x * f * 0.015, v.y * 1.5);
+        float len = length(max(abs(v), abs(vClamped)));
+
+        o += col * exp(sin(i * i + iTime * 0.8)) / max(len, 0.0001)
+             * (1.0 + tailNoise * 0.8) * thinness;
+      }
+
+      o = tanh4(pow(abs(o / 55.0), vec4(1.4)));
+      gl_FragColor = o * 2.2;
+    }
+  `;
+
+  function mkShader(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      console.warn('[hero-shader]', gl.getShaderInfoLog(s)); gl.deleteShader(s); return null;
+    }
+    return s;
+  }
+  const vs = mkShader(gl.VERTEX_SHADER, VS);
+  const fs = mkShader(gl.FRAGMENT_SHADER, FS);
+  if (!vs || !fs) return;
+
+  const prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+    console.warn('[hero-shader]', gl.getProgramInfoLog(prog)); return;
+  }
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER,
+    new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+  const posLoc = gl.getAttribLocation(prog, 'a_pos');
+  gl.enableVertexAttribArray(posLoc);
+  gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+  const uTime = gl.getUniformLocation(prog, 'iTime');
+  const uRes  = gl.getUniformLocation(prog, 'iResolution');
+
+  let startTs = null, rafId;
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr  = Math.min(window.devicePixelRatio || 1, 1.5);
+    canvas.width  = Math.round(rect.width  * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+  }
+
+  function tick(ts) {
+    if (!startTs) startTs = ts;
+    gl.uniform1f(uTime, (ts - startTs) * 0.001);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    rafId = requestAnimationFrame(tick);
+  }
+
+  /* pause when tab is hidden or hero is off-screen */
+  const visObs = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { startTs = null; rafId = requestAnimationFrame(tick); }
+    else cancelAnimationFrame(rafId);
+  }, { threshold: 0.01 });
+  visObs.observe(canvas);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(rafId);
+    else { startTs = null; rafId = requestAnimationFrame(tick); }
+  });
+
+  window.addEventListener('resize', resize, { passive: true });
+  resize();
+})();
+
+/* ── PARTICLE SYSTEM ── */
+(function () {
+  const c = document.getElementById('fx');
+  const ctx = c.getContext('2d');
+  let W, H, pts = [];
+  const mouse = { x: -9999, y: -9999 };
+
+  function resize() { W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
+
+  const COLORS = [
+    'rgba(255,94,0,', 'rgba(255,130,60,', 'rgba(255,200,140,', 'rgba(200,200,200,',
+  ];
+
+  function init() {
+    pts = [];
+    for (let i = 0; i < 55; i++) {
+      pts.push({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+        r: Math.random() * 1.6 + 0.4,
+        a: Math.random() * 0.5 + 0.1,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    pts.forEach(p => {
+      const dx = mouse.x - p.x, dy = mouse.y - p.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) { p.x -= dx * 0.012; p.y -= dy * 0.012; }
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color + p.a + ')';
+      ctx.fill();
+    });
+    pts.forEach((a, i) => {
+      pts.slice(i + 1).forEach(b => {
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 110) {
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = 'rgba(255,94,0,' + (0.07 * (1 - d / 110)) + ')';
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      });
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); init(); });
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  resize(); init(); draw();
+})();
+
+/* ── NAV SCROLL STATE ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* ── SCROLL REVEAL ── */
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+reveals.forEach(r => observer.observe(r));
+
+/* ── STAT COUNTER ANIMATION ── */
+function animateCount(el) {
+  const target = parseInt(el.getAttribute('data-count'), 10);
+  if (isNaN(target)) return;
+  let start = 0;
+  const duration = 1800;
+  const step = timestamp => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 4);
+    el.textContent = Math.round(ease * target);
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const nums = e.target.querySelectorAll('[data-count]');
+      nums.forEach(animateCount);
+      counterObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.stats-row').forEach(el => counterObserver.observe(el));
+
+/* ── FORM SUBMIT ── */
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = '✓ Sent! We\'ll be in touch soon.';
+  btn.style.background = '#22c55e';
+  btn.disabled = true;
+}
+</script>
+</body>
+</html>
