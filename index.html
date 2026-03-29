@@ -86,11 +86,15 @@ nav {
 nav.scrolled { background: rgba(6,6,6,0.92); border-color: var(--border-h); }
 
 .nav-logo {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1rem; font-weight: 700;
-  color: var(--white); text-decoration: none; white-space: nowrap; letter-spacing: -0.02em;
+  display: flex; align-items: center;
+  text-decoration: none; white-space: nowrap; flex-shrink: 0;
 }
-.nav-logo span { color: var(--orange); }
+.nav-logo img {
+  height: 42px; width: auto;
+  /* logo has black bg — mix it out so it floats on the dark nav */
+  mix-blend-mode: screen;
+  filter: brightness(1.15);
+}
 
 .nav-links { display: flex; gap: 2px; list-style: none; }
 .nav-links a {
@@ -199,13 +203,15 @@ nav.scrolled { background: rgba(6,6,6,0.92); border-color: var(--border-h); }
 .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: pulse 2s infinite; }
 
 .hero-brand {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.6rem, 4.5vw, 5rem);
-  line-height: 1;
-  letter-spacing: 0.06em;
-  color: var(--orange);
-  margin-bottom: 4px;
+  margin-bottom: 12px;
   animation: fadeUp 0.9s ease both;
+}
+.hero-brand img {
+  height: clamp(80px, 12vw, 140px);
+  width: auto;
+  mix-blend-mode: screen;
+  filter: brightness(1.2);
+  display: block;
 }
 .hero-title {
   font-family: 'Bebas Neue', sans-serif;
@@ -839,11 +845,11 @@ footer {
   flex-wrap: wrap; gap: 12px;
   position: relative; z-index: 1;
 }
-.footer-logo {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.1rem; font-weight: 700; color: var(--white); letter-spacing: -0.02em;
+.footer-logo img {
+  height: 56px; width: auto;
+  mix-blend-mode: screen;
+  filter: brightness(1.1);
 }
-.footer-logo span { color: var(--orange); }
 footer p { font-size: 0.78rem; color: var(--grey); line-height: 1.6; }
 footer a { color: var(--orange); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
@@ -938,7 +944,7 @@ footer a:hover { text-decoration: underline; }
   .side-card { flex: 1 1 calc(50% - 6px); }
   .promo-card { flex: 1 1 100%; }
 
-  .hero-brand { font-size: clamp(2rem, 6vw, 3.2rem); }
+  .hero-brand img { height: clamp(70px, 10vw, 110px); }
   .hero-title { font-size: clamp(1.1rem, 3vw, 1.8rem); }
   .hero-title .accent { font-size: clamp(1.3rem, 3.5vw, 2rem); }
   .hero-sub { font-size: 0.9rem; max-width: 100%; }
@@ -989,7 +995,7 @@ footer a:hover { text-decoration: underline; }
   .promo-card-num { font-size: 4.5rem; }
 
   .hero-badge { font-size: 0.6rem; padding: 5px 11px; }
-  .hero-brand { font-size: clamp(1.8rem, 9vw, 2.8rem); letter-spacing: 0.04em; }
+  .hero-brand img { height: 72px; }
   .hero-title { font-size: clamp(0.95rem, 4vw, 1.4rem); }
   .hero-title .accent { font-size: clamp(1.1rem, 5vw, 1.6rem); }
   .hero-sub { font-size: 0.85rem; margin-bottom: 24px; }
@@ -1040,7 +1046,9 @@ footer a:hover { text-decoration: underline; }
 
 <!-- ── NAV ── -->
 <nav id="nav">
-  <a href="#" class="nav-logo">COASTAL<span>.</span>MECHANICS</a>
+  <a href="#" class="nav-logo">
+    <img src="Brand%20Doc's/COASTAL%20Mechanics.png" alt="Coastal Mechanics" draggable="false">
+  </a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#about">About</a></li>
@@ -1059,7 +1067,9 @@ footer a:hover { text-decoration: underline; }
     <div class="hero-grain"></div>
     <div class="hero-content">
       <div class="hero-badge">Busselton · Dunsborough · Margaret River · Bunbury</div>
-      <div class="hero-brand">COASTAL MECHANICS</div>
+      <div class="hero-brand">
+        <img src="Brand%20Doc's/COASTAL%20Mechanics.png" alt="Coastal Mechanics" draggable="false">
+      </div>
       <h1 class="hero-title">
         Precision Mobile <span class="accent">Mechanic.</span>
       </h1>
@@ -1499,7 +1509,9 @@ footer a:hover { text-decoration: underline; }
 
 <!-- ── FOOTER ── -->
 <footer>
-  <div class="footer-logo">COASTAL<span>.</span>MECHANICS</div>
+  <div class="footer-logo">
+    <img src="Brand%20Doc's/COASTAL%20Mechanics.png" alt="Coastal Mechanics">
+  </div>
   <p>
     © 2025 Coastal Mechanics · Shehan Fernando · <a href="tel:+61123123123">+61 123 123 123</a><br>
     Mobile Mechanic · Busselton · Dunsborough · Margaret River · Bunbury · South West WA
