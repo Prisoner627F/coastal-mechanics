@@ -148,7 +148,7 @@ nav.scrolled { background: rgba(6,6,6,0.92); border-color: var(--border-h); }
 /* light tint — just enough to make photo read, NOT black it out */
 .hero-photo-tint {
   position: absolute; inset: 0; z-index: 0;
-  background: rgba(5,5,5,0.22);
+  background: rgba(5,5,5,0.10);
 }
 /* shader blends over photo via screen — additive orange glow */
 #hero-shader {
@@ -164,9 +164,9 @@ nav.scrolled { background: rgba(6,6,6,0.92); border-color: var(--border-h); }
   background: linear-gradient(
     to bottom,
     rgba(5,5,5,0.0)  0%,
-    rgba(5,5,5,0.0)  35%,
-    rgba(5,5,5,0.55) 65%,
-    rgba(5,5,5,0.92) 100%
+    rgba(5,5,5,0.0)  20%,
+    rgba(5,5,5,0.35) 55%,
+    rgba(5,5,5,0.80) 100%
   );
   z-index: 2;
 }
@@ -228,16 +228,17 @@ nav.scrolled { background: rgba(6,6,6,0.92); border-color: var(--border-h); }
   line-height: 1.1;
   letter-spacing: 0.04em;
   margin-bottom: 20px;
-  color: rgba(240,237,232,0.9);
-  text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+  color: rgba(255,255,255,1);
+  text-shadow: 0 2px 20px rgba(0,0,0,0.8);
   animation: fadeUp 0.9s ease 0.08s both;
 }
 .hero-title .accent { color: var(--white); font-size: clamp(2rem, 3.5vw, 3.4rem); text-shadow: 0 0 30px rgba(255,94,0,0.4); }
 
 .hero-sub {
-  font-size: 1.05rem; color: rgba(240,237,232,0.75);
+  font-size: 1.05rem; color: rgba(255,255,255,0.95);
   line-height: 1.65; max-width: 420px;
   margin-bottom: 32px;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.7);
   animation: fadeUp 0.9s ease 0.15s both;
 }
 
@@ -328,49 +329,85 @@ nav.scrolled { background: rgba(6,6,6,0.92); border-color: var(--border-h); }
 .area-pill:hover { color: var(--orange); border-color: rgba(255,94,0,0.35); }
 
 .promo-card {
-  background: var(--orange);
+  background: linear-gradient(135deg, #ff5e00 0%, #ff8c00 60%, #ffb347 100%);
   border-radius: var(--radius-card); padding: 28px 24px;
   position: relative; overflow: hidden;
-  flex: 1; /* fill remaining column height */
-  display: flex; flex-direction: column; justify-content: flex-end;
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: space-between;
   box-shadow:
-    0 0 0 1px rgba(255,94,0,0.6),
-    0 0 30px rgba(255,94,0,0.5),
-    0 0 80px rgba(255,94,0,0.25);
+    0 0 0 2px rgba(255,140,0,0.8),
+    0 0 40px rgba(255,94,0,0.7),
+    0 0 100px rgba(255,94,0,0.35);
+  animation: promo-pulse 3s ease-in-out infinite;
+}
+@keyframes promo-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(255,140,0,0.8), 0 0 40px rgba(255,94,0,0.7), 0 0 100px rgba(255,94,0,0.35); }
+  50% { box-shadow: 0 0 0 2px rgba(255,180,0,1), 0 0 60px rgba(255,94,0,0.9), 0 0 120px rgba(255,94,0,0.5); }
 }
 .promo-card::before {
-  content: '⚡ LIMITED PROMO';
-  display: block;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.22em;
-  color: rgba(0,0,0,0.55);
-  margin-bottom: 6px; position: relative; z-index: 1;
-}
-.promo-card::after {
   content: '';
   position: absolute; inset: 0;
   background: repeating-linear-gradient(
     -48deg,
-    transparent, transparent 12px,
-    rgba(0,0,0,0.05) 12px, rgba(0,0,0,0.05) 24px
+    transparent, transparent 14px,
+    rgba(255,255,255,0.06) 14px, rgba(255,255,255,0.06) 28px
   );
+  z-index: 0;
 }
+.promo-card::after {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  z-index: 0;
+}
+.promo-card-top {
+  position: relative; z-index: 1;
+}
+.promo-card-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(0,0,0,0.18);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.22em;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.promo-card-bottom { position: relative; z-index: 1; }
 .promo-card-num {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 5.5rem; color: #000; line-height: 0.9; position: relative; z-index: 1;
-  letter-spacing: -0.01em;
+  font-size: 6rem; color: #fff; line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.25);
 }
 .promo-card-label {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: rgba(0,0,0,0.65);
-  margin-top: 8px; position: relative; z-index: 1; line-height: 1.4;
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.95);
+  margin-top: 10px; line-height: 1.4;
 }
 .promo-card-sub {
   font-family: 'Barlow', sans-serif;
-  font-size: 0.72rem; color: rgba(0,0,0,0.5);
-  position: relative; z-index: 1; margin-top: 4px;
+  font-size: 0.72rem; color: rgba(255,255,255,0.75);
+  margin-top: 6px;
 }
+.promo-card-cta {
+  display: inline-block;
+  margin-top: 16px;
+  background: #000;
+  color: var(--orange);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 10px 20px; border-radius: 100px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.promo-card-cta:hover { background: #1a1a1a; transform: translateY(-2px); }
 
 /* ═══════════════════════════════════════════
    MARQUEE STRIP
@@ -1068,7 +1105,7 @@ footer a:hover { text-decoration: underline; }
 
 <!-- ── HERO ── -->
 <section id="hero">
-  <div class="hero-main reveal">
+  <div class="hero-main">
     <div class="hero-photo-tint"></div>
     <canvas id="hero-shader" aria-hidden="true"></canvas>
     <div class="hero-overlay"></div>
@@ -1108,9 +1145,15 @@ footer a:hover { text-decoration: underline; }
       </div>
     </div>
     <div class="promo-card reveal rv3">
-      <div class="promo-card-num">$150</div>
-      <div class="promo-card-label">Flat Rate · Full Service</div>
-      <div class="promo-card-sub">Labour + call-out included · No hidden fees</div>
+      <div class="promo-card-top">
+        <div class="promo-card-badge">⚡ Limited Promo</div>
+      </div>
+      <div class="promo-card-bottom">
+        <div class="promo-card-num">$150</div>
+        <div class="promo-card-label">Flat Rate · Full Service</div>
+        <div class="promo-card-sub">Labour + call-out included · No hidden fees</div>
+        <a href="#contact" class="promo-card-cta">Book Now →</a>
+      </div>
     </div>
   </div>
 </section>
