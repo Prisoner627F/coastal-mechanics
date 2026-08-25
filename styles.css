@@ -125,7 +125,7 @@ nav.scrolled { background: rgba(6,6,6,0.92); border-color: var(--border-h); }
   display: flex; flex-direction: column; justify-content: flex-end;
   padding: 44px;
   /* mechanic photo as base layer, shader renders on top */
-  background-image: url("Brand%20Doc's/erik-mclean-3uHlGFnzPDU-unsplash.jpg");
+  background-image: url("assets/images/hero-engine-bay.jpg");
   background-size: cover;
   background-position: center;
 }
