@@ -127,7 +127,7 @@ nav.scrolled { background: rgba(6,6,6,0.92); border-color: var(--border-h); }
   /* mechanic photo as base layer, shader renders on top */
   background-image: url("Brand%20Doc's/erik-mclean-3uHlGFnzPDU-unsplash.jpg");
   background-size: cover;
-  background-position: center 30%;
+  background-position: center;
 }
 
 /* photo sits at z-index 0 (background-image on .hero-main) */
