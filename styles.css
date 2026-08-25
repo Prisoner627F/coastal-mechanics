@@ -1010,7 +1010,7 @@ footer a:hover { text-decoration: underline; }
   border: 1px solid rgba(255,255,255,0.1);
   padding: 7px; border-radius: 100px;
   display: flex; gap: 8px; z-index: 2000;
-  animation: fadeUp 0.9s ease 1s both;
+  animation: fabFadeUp 0.9s ease 1s both;
   box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
 }
 .fab-btn {
@@ -1037,6 +1037,10 @@ footer a:hover { text-decoration: underline; }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fabFadeUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(30px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 @keyframes pulse {
   0%, 100% { opacity: 1; } 50% { opacity: 0.5; }
