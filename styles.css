@@ -554,41 +554,15 @@ a.area-pill { text-decoration: none; display: inline-block; }
   box-shadow: var(--shadow-elevated);
   max-width: 760px; margin: 0 auto;
   position: relative;
-  transform: rotate(-0.3deg);
 }
-.docket-head {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  padding: 26px 28px 0;
-}
-.docket-tag {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--grey);
-}
-.docket-num {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.95rem; color: var(--lgrey); margin-top: 4px;
-}
-.docket-stamp {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--orange);
-  border: 2px dashed rgba(255,94,0,0.5);
-  border-radius: 50%;
-  width: 76px; height: 76px;
-  display: flex; align-items: center; justify-content: center; text-align: center;
-  line-height: 1.15;
-  transform: rotate(-9deg);
-  flex-shrink: 0;
-}
-
 .docket-featured {
-  margin: 20px 28px 0;
+  margin: 28px 28px 0;
   background: var(--steel);
   border: 1px solid rgba(255,94,0,0.2);
   border-radius: var(--radius-sm);
   padding: 22px;
   display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  position: relative;
 }
 .docket-featured-icon { font-size: 1.8rem; }
 .docket-featured-badge {
@@ -609,24 +583,30 @@ a.area-pill { text-decoration: none; display: inline-block; }
 }
 .docket-featured-price small { font-size: 0.7rem; color: var(--grey); }
 
-.docket-perf {
-  position: relative; height: 0; margin: 24px 0;
-  border-top: 2px dashed var(--border-h);
+.docket-lines { padding: 24px 28px 0; display: flex; flex-direction: column; }
+.docket-category {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--orange);
+  padding: 16px 0 4px;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
 }
-.docket-perf::before, .docket-perf::after {
-  content: ''; position: absolute; top: -7px;
-  width: 14px; height: 14px; border-radius: 50%;
-  background: var(--black); border: 1px solid var(--border-h);
-}
-.docket-perf::before { left: -35px; }
-.docket-perf::after { right: -35px; }
-
-.docket-lines { padding: 0 28px; display: flex; flex-direction: column; }
+.docket-category:first-child { border-top: none; margin-top: 0; padding-top: 0; }
 .docket-line {
   display: flex; align-items: baseline; gap: 10px;
   padding: 12px 0;
   font-family: 'Space Grotesk', sans-serif;
 }
+a.docket-line { text-decoration: none; cursor: pointer; }
+a.docket-line .dl-name {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--orange);
+  text-underline-offset: 4px;
+}
+a.docket-line .dl-name::after { content: ' \2192'; color: var(--orange); font-weight: 700; }
+a.docket-line:hover .dl-name { color: var(--orange); }
 .dl-no { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: rgba(255,94,0,0.55); flex-shrink: 0; }
 .dl-icon { font-size: 1rem; flex-shrink: 0; }
 .dl-name { font-size: 0.92rem; font-weight: 600; color: var(--white); white-space: nowrap; }
@@ -634,12 +614,7 @@ a.area-pill { text-decoration: none; display: inline-block; }
 .dl-price { font-family: 'IBM Plex Mono', monospace; font-size: 0.92rem; font-weight: 500; color: var(--orange); white-space: nowrap; flex-shrink: 0; }
 .dl-price small { color: var(--grey); font-size: 0.72rem; }
 
-.docket-foot { padding: 8px 28px 26px; text-align: center; }
-.docket-barcode {
-  height: 26px; max-width: 220px; margin: 0 auto 12px;
-  background: repeating-linear-gradient(90deg, var(--lgrey) 0px, var(--lgrey) 2px, transparent 2px, transparent 5px, var(--lgrey) 5px, var(--lgrey) 6px, transparent 6px, transparent 10px);
-  opacity: 0.35;
-}
+.docket-foot { padding: 20px 28px 26px; text-align: center; border-top: 1px solid var(--border); margin-top: 16px; }
 .pricing-note { color: var(--grey); font-size: 0.8rem; }
 
 /* ═══════════════════════════════════════════
@@ -714,6 +689,13 @@ a.area-pill { text-decoration: none; display: inline-block; }
   position: absolute; inset: 0;
   background: linear-gradient(180deg, transparent 40%, rgba(5,5,5,0.55) 100%);
   mix-blend-mode: multiply;
+}
+
+/* Reusable photo + text feature, used on service sub-pages */
+.photo-feature {
+  max-width: 1100px; margin: 0 auto; padding: 0 24px;
+  display: grid; grid-template-columns: 0.85fr 1.15fr;
+  gap: 48px; align-items: center;
 }
 
 /* Orange decorative corner line */
@@ -1096,6 +1078,7 @@ footer a:hover { text-decoration: underline; }
 
 /* ── TABLET PORTRAIT (≤ 768px) ── */
 @media (max-width: 768px) {
+  .photo-feature { grid-template-columns: 1fr; gap: 28px; }
   nav { width: calc(100vw - 24px); gap: 12px; padding: 8px 8px 8px 20px; }
   .nav-links { display: none; }
   .nav-toggle { display: flex; }
@@ -1219,12 +1202,9 @@ footer a:hover { text-decoration: underline; }
 
   footer { padding: 24px 14px; font-size: 0.7rem; }
 
-  .docket-perf::before { left: -8px; }
-  .docket-perf::after { right: -8px; }
-  .docket-head { padding: 20px 18px 0; }
-  .docket-featured { margin: 16px 18px 0; padding: 18px; }
-  .docket-lines { padding: 0 18px; }
-  .docket-foot { padding: 8px 18px 22px; }
+  .docket-featured { margin: 20px 18px 0; padding: 18px; }
+  .docket-lines { padding: 20px 18px 0; }
+  .docket-foot { padding: 16px 18px 22px; }
   .docket-line { flex-wrap: wrap; }
   .dl-name { white-space: normal; }
   .dl-dots { display: none; }
