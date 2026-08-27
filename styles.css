@@ -290,6 +290,8 @@ nav.scrolled { background: rgba(6,6,6,0.92); border-color: var(--border-h); }
   transition: border-color 0.25s, background 0.25s, transform 0.25s;
   flex: 0 0 auto;
 }
+/* with the promo card removed, let the last side-card grow to fill the column */
+.hero-side .side-card:last-of-type { flex: 1; }
 .side-card:hover { border-color: rgba(255,94,0,0.22); background: var(--steel); transform: translateX(-3px); }
 
 .side-label {
