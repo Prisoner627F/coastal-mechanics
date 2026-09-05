@@ -1,3 +1,13 @@
+/* ── GA4: TRACK PHONE CLICKS ── */
+(function () {
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href^="tel:"]');
+    if (link && typeof gtag === 'function') {
+      gtag('event', 'phone_click', { phone_number: link.getAttribute('href').replace('tel:', '') });
+    }
+  });
+})();
+
 /* ── MOBILE NAV TOGGLE ── */
 (function () {
   const toggle = document.querySelector('.nav-toggle');
@@ -276,6 +286,7 @@ async function handleSubmit(e) {
       btn.textContent = '✓ Sent! We\'ll be in touch soon.';
       btn.style.background = '#22c55e';
       form.reset();
+      if (typeof gtag === 'function') gtag('event', 'form_submit');
     } else {
       btn.textContent = 'Something went wrong — please call us.';
       btn.style.background = '#ef4444';
