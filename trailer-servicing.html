@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trailer Servicing | Coastal Mechanics</title>
+<link rel="canonical" href="https://thecoastalmechanics.online/trailer-servicing.html">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<meta name="description" content="Mobile trailer servicing across Dunsborough, Busselton and the South West WA. Safety checks, single &amp; tandem axle servicing, wheel bearings and repairs — we come to your trailer. Call Shehan Fernando.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- SVG grain filter definition -->
+<svg width="0" height="0" style="position:absolute">
+  <filter id="grain">
+    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feBlend in="SourceGraphic" mode="overlay" result="blend"/>
+    <feComposite in="blend" in2="SourceGraphic" operator="in"/>
+  </filter>
+</svg>
+
+<link rel="stylesheet" href="styles.css">
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4KFB1P0VC6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-4KFB1P0VC6');
+</script>
+
+<!-- LocalBusiness structured data, scoped to this service -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AutoRepair",
+  "name": "Coastal Mechanics",
+  "description": "Mobile trailer servicing across Dunsborough, Busselton and the South West WA. Safety checks, single and tandem axle servicing, wheel bearings and general repairs.",
+  "url": "https://thecoastalmechanics.online/trailer-servicing.html",
+  "telephone": "+61478515414",
+  "email": "shehanf@thecoastalmechanics.online",
+  "image": "https://thecoastalmechanics.online/favicon.png",
+  "priceRange": "$50-$249",
+  "areaServed": [
+    { "@type": "City", "name": "Dunsborough" },
+    { "@type": "City", "name": "Quindalup" },
+    { "@type": "City", "name": "Vasse" },
+    { "@type": "City", "name": "Yallingup" },
+    { "@type": "City", "name": "Busselton" },
+    { "@type": "City", "name": "Cowaramup" },
+    { "@type": "City", "name": "Margaret River" }
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "07:00",
+      "closes": "18:00"
+    }
+  ],
+  "paymentAccepted": "Cash, Bank Transfer, PayID",
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Trailer Safety Check" }, "price": "99", "priceCurrency": "AUD" },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Single Axle Trailer Service" }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": "149", "priceCurrency": "AUD" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tandem Axle Trailer Service" }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": "249", "priceCurrency": "AUD" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Wheel Bearing Replacement" }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": "120", "priceCurrency": "AUD" } }
+  ]
+}
+</script>
+</head>
+<body>
+
+<canvas id="fx"></canvas>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">COASTAL<span>.</span>MECHANICS</a>
+  <ul class="nav-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#areas">Coverage</a></li>
+    <li><a href="index.html#reviews">Reviews</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="Toggle menu">&#9776;</button>
+  <a href="index.html#contact" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="section-wrap" style="padding-top:120px;max-width:820px;margin:0 auto;text-align:center;">
+  <div class="section-eyebrow reveal">Trailer Servicing · South West WA</div>
+  <h1 class="section-title reveal" style="font-size:clamp(2rem,6vw,3.2rem);">
+    Trailer Servicing<br><span style="color:var(--orange)">At Your Door.</span>
+  </h1>
+  <p class="reveal rv1" style="color:var(--lgrey);font-size:1.05rem;max-width:620px;margin:16px auto 0;line-height:1.65;">Keep your trailer safe and road-ready without loading it up and driving it to a workshop. We come to your trailer, wherever it's parked.</p>
+  <div class="trust-line reveal rv2" style="margin:20px auto 0;">🛡️ Trade Qualified · Transparent Pricing · No Workshop Markup</div>
+  <div class="hero-ctas reveal rv3" style="justify-content:center;margin-top:26px;">
+    <a href="tel:+61478515414" class="btn-p">📞 Call Shehan</a>
+    <a href="sms:+61478515414?body=Hi%20Shehan%2C%20I%27d%20like%20a%20quote%20for%20trailer%20servicing.%20My%20trailer%20is%20a%20%5Bsingle%2Ftandem%20axle%5D%20%5Btrailer%20type%5D." class="btn-s">💬 SMS a Quote Request</a>
+  </div>
+</section>
+
+<!-- ── SINGLE VS TANDEM (INTERACTIVE) ── -->
+<section class="section-wrap">
+  <div class="section-eyebrow reveal">Know Your Trailer</div>
+  <h2 class="section-title reveal">WHAT'S YOUR SETUP?</h2>
+  <p class="reveal rv1" style="color:var(--lgrey);line-height:1.75;font-size:0.98rem;max-width:680px;">Tap the one that matches yours — see what we check and what it costs. Tap the orange dots on the photo for detail.</p>
+
+  <div class="trailer-toggle reveal rv2">
+    <button type="button" class="trailer-toggle-btn active" data-trailer="single">Single Axle</button>
+    <button type="button" class="trailer-toggle-btn" data-trailer="tandem">Tandem Axle</button>
+  </div>
+
+  <div class="trailer-showcase reveal rv3">
+    <div class="trailer-photo-stage">
+      <div class="about-img-frame">
+        <img id="trailer-photo" src="assets/images/trailer-single-axle.jpg" alt="Single axle trailer with one wheel visible per side" decoding="async">
+        <div class="about-img-overlay"></div>
+      </div>
+      <div id="trailer-hotspots"></div>
+      <div class="about-badge">
+        <div class="about-badge-num">🔧</div>
+        <div class="about-badge-label" id="trailer-badge-label">Single Axle — 2 Wheels Total</div>
+      </div>
+    </div>
+    <div class="trailer-showcase-info">
+      <div class="trailer-showcase-name" id="trailer-service-name">Single Axle Trailer Service</div>
+      <div class="trailer-showcase-price" id="trailer-service-price">From $149 <small>AUD</small></div>
+      <p style="color:var(--lgrey);font-size:0.92rem;line-height:1.6;margin:12px 0 20px;">Tap the dots on the photo to see exactly what's checked. Plus a small call-out fee based on your location.</p>
+      <a id="trailer-sms-cta" class="btn-p" href="sms:+61478515414?body=Hi%20Shehan%2C%20I%27d%20like%20a%20quote%20for%20trailer%20servicing.%20My%20trailer%20is%20a%20single%20axle%20trailer.">💬 Get a Quote for This</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section class="section-wrap">
+  <div class="section-eyebrow reveal">What We Do</div>
+  <h2 class="section-title reveal">TRAILER SERVICES &amp; PRICING</h2>
+  <div class="docket reveal" style="max-width:640px;">
+    <div class="docket-lines" style="padding:24px 28px;">
+      <div class="docket-category">Trailer Services</div>
+      <div class="docket-line"><span class="dl-no">01</span><span class="dl-icon">🔍</span><span class="dl-name">Trailer Safety Check</span><span class="dl-dots"></span><span class="dl-price">$99 <small>AUD</small></span></div>
+      <div class="docket-line" data-trailer-price="single"><span class="dl-no">02</span><span class="dl-icon">🚙</span><span class="dl-name">Single Axle Trailer Service</span><span class="dl-dots"></span><span class="dl-price">From $149 <small>AUD</small></span></div>
+      <div class="docket-line" data-trailer-price="tandem"><span class="dl-no">03</span><span class="dl-icon">🚛</span><span class="dl-name">Tandem Axle Trailer Service</span><span class="dl-dots"></span><span class="dl-price">From $249 <small>AUD</small></span></div>
+
+      <div class="docket-category">Trailer Repairs</div>
+      <div class="docket-line"><span class="dl-no">04</span><span class="dl-icon">⚙️</span><span class="dl-name">Wheel Bearing Replacement</span><span class="dl-dots"></span><span class="dl-price">From $120 <small>per wheel + parts</small></span></div>
+      <div class="docket-line"><span class="dl-no">05</span><span class="dl-icon">🔧</span><span class="dl-name">Trailer Repairs</span><span class="dl-dots"></span><span class="dl-price">$110/hr <small>+ parts</small></span></div>
+    </div>
+  </div>
+  <p class="pricing-note reveal rv1">Plus a small call-out fee based on your location. If we find something that needs attention beyond the service, you'll get a clear quote before any extra work goes ahead — nothing extra without your OK.</p>
+</section>
+
+<!-- ── WHAT'S INCLUDED ── -->
+<section class="section-wrap">
+  <div class="section-eyebrow reveal">The Safety Check</div>
+  <h2 class="section-title reveal">WHAT WE CHECK</h2>
+  <div class="about-tags reveal rv1" style="margin-top:12px;">
+    <span class="about-tag">✓ Tyres &amp; Wheels</span>
+    <span class="about-tag">✓ Wheel Bearings</span>
+    <span class="about-tag">✓ Coupling &amp; Hitch</span>
+    <span class="about-tag">✓ Safety Chains</span>
+    <span class="about-tag">✓ Suspension</span>
+    <span class="about-tag">✓ Jockey Wheel</span>
+    <span class="about-tag">✓ Chassis Condition</span>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="section-wrap">
+  <div class="section-eyebrow reveal">Questions</div>
+  <h2 class="section-title reveal">GOOD TO KNOW</h2>
+  <div class="faq-list">
+    <details class="faq-item reveal">
+      <summary>What size trailers do you service?</summary>
+      <p>Single and tandem axle box, car and general-purpose trailers around the South West. If you're not sure whether yours is covered, just give us a call.</p>
+    </details>
+    <details class="faq-item reveal rv1">
+      <summary>Do I need to be there while you service my trailer?</summary>
+      <p>Not necessarily — as long as we can access it safely. Many customers leave it parked at home or work and we handle the rest.</p>
+    </details>
+    <details class="faq-item reveal rv2">
+      <summary>What's included in the Trailer Safety Check?</summary>
+      <p>Tyres and wheels, wheel bearings, coupling and hitch, safety chains, suspension, jockey wheel, and general chassis condition — a quick, honest read on whether your trailer's fit to tow.</p>
+    </details>
+    <details class="faq-item reveal rv3">
+      <summary>What if you find something that needs fixing?</summary>
+      <p>You'll get a clear explanation of what's wrong and a quote for the fix — nothing extra happens without your approval first.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ── CONTACT CTA ── -->
+<section class="section-wrap" style="max-width:640px;margin:0 auto;text-align:center;">
+  <div class="section-eyebrow reveal">Get In Touch</div>
+  <h2 class="section-title reveal">BOOK YOUR TRAILER SERVICE</h2>
+  <p class="reveal rv1" style="color:var(--lgrey);margin-bottom:24px;">Call, SMS, or use the full enquiry form on our home page — we'll get back to you within a few hours.</p>
+  <div class="hero-ctas reveal rv2" style="justify-content:center;">
+    <a href="tel:+61478515414" class="btn-p">📞 Call Shehan</a>
+    <a href="index.html#contact" class="btn-s">Get a Fixed Quote →</a>
+  </div>
+</section>
+
+<!-- ── AREAS SERVICED ── -->
+<section class="section-wrap" style="max-width:820px;margin:0 auto;text-align:center;">
+  <div class="section-eyebrow reveal">Also Servicing</div>
+  <p class="reveal rv1" style="color:var(--grey);font-size:0.88rem;line-height:2;"><a href="mobile-mechanic-dunsborough.html">Dunsborough</a> · <a href="mobile-mechanic-quindalup.html">Quindalup</a> · <a href="mobile-mechanic-vasse.html">Vasse</a> · <a href="mobile-mechanic-yallingup.html">Yallingup</a> · <a href="mobile-mechanic-busselton.html">Busselton</a> · <a href="mobile-mechanic-cowaramup.html">Cowaramup</a> · <a href="mobile-mechanic-margaret-river.html">Margaret River</a></p>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">COASTAL<span>.</span>MECHANICS</div>
+  <p>
+    © 2025 Coastal Mechanics · Shehan Fernando · <a href="tel:+61478515414">+61 478 515 414</a><br>
+    Mobile Mechanic · Dunsborough · Quindalup · Vasse · Yallingup · Busselton · Cowaramup · Margaret River · South West WA
+  </p>
+</footer>
+
+<!-- ── FLOATING ACTION BAR ── -->
+<div class="fab">
+  <a href="tel:+61478515414" class="fab-btn fab-call">📞 Call Shehan</a>
+  <a href="sms:+61478515414?body=Hi%20Shehan%2C%20I%27d%20like%20a%20quote%20for%20trailer%20servicing.%20My%20trailer%20is%20a%20%5Bsingle%2Ftandem%20axle%5D%20%5Btrailer%20type%5D." class="fab-btn fab-sms">💬 SMS Booking</a>
+</div>
+
+<!-- ── ENTRY PROMO POPUP ── -->
+<div id="trailer-promo-popup" class="promo-popup" role="button" tabindex="0">
+  <button type="button" class="promo-popup-close" aria-label="Close">&times;</button>
+  <div class="promo-popup-icon">🚚</div>
+  <div class="promo-popup-text">
+    <div class="promo-popup-title">Trailer Servicing</div>
+    <div class="promo-popup-price">From $149</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const trailerData = {
+    single: {
+      photo: 'assets/images/trailer-single-axle.jpg',
+      alt: 'Single axle trailer with one wheel visible per side',
+      badge: 'Single Axle — 2 Wheels Total',
+      serviceName: 'Single Axle Trailer Service',
+      price: 'From $149 <small>AUD</small>',
+      smsBody: "Hi Shehan, I'd like a quote for trailer servicing. My trailer is a single axle trailer.",
+      hotspots: [
+        { x: 15, y: 71, label: 'Coupling &amp; Jockey Wheel', desc: 'Locking mechanism, safety chains &amp; jockey wheel checked' },
+        { x: 79, y: 75, label: 'Wheel Bearing', desc: 'Checked for play, roughness &amp; overheating' },
+        { x: 55, y: 61, label: 'Chassis &amp; Suspension', desc: 'Springs, shackles &amp; frame inspected for cracks or corrosion' }
+      ]
+    },
+    tandem: {
+      photo: 'assets/images/trailer-tandem-axle.jpg',
+      alt: 'Tandem axle trailer with two wheels visible per side',
+      badge: 'Tandem Axle — 4 Wheels Total',
+      serviceName: 'Tandem Axle Trailer Service',
+      price: 'From $249 <small>AUD</small>',
+      smsBody: "Hi Shehan, I'd like a quote for trailer servicing. My trailer is a tandem axle trailer.",
+      hotspots: [
+        { x: 38, y: 67, label: 'Wheel Bearings', desc: 'Both hubs checked for play, roughness &amp; overheating' },
+        { x: 62, y: 66, label: 'Chassis &amp; Suspension', desc: 'Springs, shackles &amp; frame inspected for cracks or corrosion' },
+        { x: 89, y: 68, label: 'Coupling &amp; Hitch', desc: 'Locking mechanism &amp; safety chains checked' }
+      ]
+    }
+  };
+
+  function renderTrailer(type) {
+    const d = trailerData[type];
+    const img = document.getElementById('trailer-photo');
+    img.src = d.photo;
+    img.alt = d.alt;
+    document.getElementById('trailer-badge-label').textContent = d.badge;
+    document.getElementById('trailer-service-name').textContent = d.serviceName;
+    document.getElementById('trailer-service-price').innerHTML = d.price;
+
+    const sms = document.getElementById('trailer-sms-cta');
+    sms.href = 'sms:+61478515414?body=' + encodeURIComponent(d.smsBody);
+
+    const hotspotContainer = document.getElementById('trailer-hotspots');
+    hotspotContainer.innerHTML = '';
+    d.hotspots.forEach(function (h) {
+      const el = document.createElement('div');
+      el.className = 'trailer-hotspot';
+      el.style.left = h.x + '%';
+      el.style.top = h.y + '%';
+      el.innerHTML = '<div class="hotspot-dot" role="button" tabindex="0" aria-label="' + h.label + '"></div>' +
+        '<div class="hotspot-label"><strong>' + h.label + '</strong><span>' + h.desc + '</span></div>';
+      const dot = el.querySelector('.hotspot-dot');
+      dot.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const wasOpen = el.classList.contains('open');
+        document.querySelectorAll('.trailer-hotspot.open').forEach(function (o) { o.classList.remove('open'); });
+        if (!wasOpen) el.classList.add('open');
+      });
+      hotspotContainer.appendChild(el);
+    });
+
+    document.querySelectorAll('.trailer-toggle-btn').forEach(function (b) {
+      b.classList.toggle('active', b.dataset.trailer === type);
+    });
+
+    document.querySelectorAll('.docket-line[data-trailer-price]').forEach(function (line) {
+      line.classList.toggle('docket-line-highlight', line.dataset.trailerPrice === type);
+    });
+  }
+
+  document.querySelectorAll('.trailer-toggle-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () { renderTrailer(btn.dataset.trailer); });
+  });
+
+  document.addEventListener('click', function () {
+    document.querySelectorAll('.trailer-hotspot.open').forEach(function (o) { o.classList.remove('open'); });
+  });
+
+  renderTrailer('single');
+
+  // Entry promo popup
+  var popup = document.getElementById('trailer-promo-popup');
+  if (popup) {
+    function popupDismissed() {
+      try { return localStorage.getItem('trailerPromoDismissed') === '1'; } catch (e) { return false; }
+    }
+    function dismissPopup() {
+      popup.classList.remove('show');
+      try { localStorage.setItem('trailerPromoDismissed', '1'); } catch (e) {}
+    }
+    if (!popupDismissed()) {
+      setTimeout(function () { popup.classList.add('show'); }, 1200);
+    }
+    popup.querySelector('.promo-popup-close').addEventListener('click', function (e) {
+      e.stopPropagation();
+      dismissPopup();
+    });
+    popup.addEventListener('click', function () {
+      document.querySelector('.trailer-showcase').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      dismissPopup();
+    });
+    popup.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); popup.click(); }
+    });
+  }
+})();
+</script>
+<script src="script.js"></script>
+</body>
+</html>
