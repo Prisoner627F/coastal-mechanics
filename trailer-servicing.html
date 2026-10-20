@@ -71,6 +71,46 @@
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What size trailers do you service?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Single and tandem axle box, car and general-purpose trailers around the South West. If you're not sure whether yours is covered, just give us a call."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to be there while you service my trailer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not necessarily — as long as we can access it safely. Many customers leave it parked at home or work and we handle the rest."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's included in the Trailer Safety Check?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tyres and wheels, wheel bearings, coupling and hitch, safety chains, suspension, jockey wheel, and general chassis condition — a quick, honest read on whether your trailer's fit to tow."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if you find something that needs fixing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You'll get a clear explanation of what's wrong and a quote for the fix — nothing extra happens without your approval first."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -197,10 +237,75 @@
 <section class="section-wrap" style="max-width:640px;margin:0 auto;text-align:center;">
   <div class="section-eyebrow reveal">Get In Touch</div>
   <h2 class="section-title reveal">BOOK YOUR TRAILER SERVICE</h2>
-  <p class="reveal rv1" style="color:var(--lgrey);margin-bottom:24px;">Call, SMS, or use the full enquiry form on our home page — we'll get back to you within a few hours.</p>
+  <p class="reveal rv1" style="color:var(--lgrey);margin-bottom:24px;">Call, SMS, or send an enquiry below — we'll get back to you within a few hours.</p>
   <div class="hero-ctas reveal rv2" style="justify-content:center;">
     <a href="tel:+61478515414" class="btn-p">📞 Call Shehan</a>
-    <a href="index.html#contact" class="btn-s">Get a Fixed Quote →</a>
+  </div>
+  <div class="form-wrap reveal rv3" style="text-align:left;margin-top:36px;">
+    <h3>Send an Enquiry</h3>
+    <form class="contact-form" action="https://formspree.io/f/mojpdddd" method="POST" onsubmit="handleSubmit(event)">
+      <input type="hidden" name="_subject" value="Website enquiry — trailer-servicing">
+      <input type="hidden" name="page" value="trailer-servicing.html">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="Jane Smith" required autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="04xx xxx xxx" required autocomplete="tel">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="service">Service Needed</label>
+        <select id="service" name="service">
+          <option value="" disabled>Select a service...</option>
+          <option>Logbook Servicing — From $120</option>
+          <option>Car Service (Standard) — $120</option>
+          <option>4WD / SUV / Van Service — $150</option>
+          <option>Oil &amp; Filter Change — From $80</option>
+          <option>Coolant Flush — From $130</option>
+          <option>Transmission Fluid Service — From $150</option>
+          <option>Brake Replacement — $150</option>
+          <option>Diagnostic Scan — $80</option>
+          <option>Battery / Alternator / Starter Testing — $50</option>
+          <option>Battery Replacement</option>
+          <option>Spark Plugs / Air Filter — From $80</option>
+          <option>Pre-Purchase Inspection — $120</option>
+          <option selected>Trailer Servicing — From $99</option>
+          <option>Other / Not Sure</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="vehicle">Vehicle Make &amp; Model</label>
+          <input type="text" id="vehicle" name="vehicle" placeholder="e.g. Toyota RAV4" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="location">Your Location</label>
+          <select id="location" name="location">
+            <option value="" disabled selected>Select your town...</option>
+            <option>Dunsborough</option>
+            <option>Quindalup</option>
+            <option>Vasse</option>
+            <option>Yallingup</option>
+            <option>Busselton</option>
+            <option>Cowaramup</option>
+            <option>Margaret River</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="rego">Vehicle Registration</label>
+        <input type="text" id="rego" name="rego" placeholder="e.g. 1ABC123" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="details">Additional Details</label>
+        <textarea id="details" name="details" placeholder="Describe the issue or preferred time..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send Enquiry →</button>
+      <p class="form-note">We'll reply within a few hours. Or just call/text directly.</p>
+    </form>
   </div>
 </section>
 
