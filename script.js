@@ -22,7 +22,7 @@
   });
 })();
 
-/* ── HERO SHADER (WebGL aurora — orange palette) ── */
+/* ── HERO SHADER (WebGL aurora — green palette) ── */
 (function () {
   const canvas = document.getElementById('hero-shader');
   if (!canvas) return;
@@ -85,11 +85,11 @@
 
         float tailNoise = fbm(v + vec2(iTime * 0.5, i)) * 0.3 * (1.0 - i / 35.0);
 
-        /* ── Orange / amber palette to match brand #ff5e00 ── */
+        /* ── Green palette to match brand #16ab4a ── */
         vec4 col = vec4(
-          0.88 + 0.12 * sin(i * 0.2  + iTime * 0.40),               /* red:   0.88–1.00 */
-          0.20 + 0.30 * (0.5 + 0.5 * cos(i * 0.3  + iTime * 0.50)), /* green: 0.20–0.50 */
-          0.01 + 0.07 * (0.5 + 0.5 * sin(i * 0.4  + iTime * 0.30)), /* blue:  0.01–0.08 */
+          0.03 + 0.07 * (0.5 + 0.5 * sin(i * 0.2  + iTime * 0.40)), /* red:   0.03–0.10 */
+          0.55 + 0.25 * (0.5 + 0.5 * cos(i * 0.3  + iTime * 0.50)), /* green: 0.55–0.80 */
+          0.18 + 0.14 * (0.5 + 0.5 * sin(i * 0.4  + iTime * 0.30)), /* blue:  0.18–0.32 */
           1.0
         );
 
@@ -181,7 +181,7 @@
   function resize() { W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
 
   const COLORS = [
-    'rgba(255,94,0,', 'rgba(255,130,60,', 'rgba(255,200,140,', 'rgba(200,200,200,',
+    'rgba(22,171,74,', 'rgba(40,190,98,', 'rgba(120,225,160,', 'rgba(200,200,200,',
   ];
 
   function init() {
@@ -217,7 +217,7 @@
         if (d < 110) {
           ctx.beginPath();
           ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = 'rgba(255,94,0,' + (0.07 * (1 - d / 110)) + ')';
+          ctx.strokeStyle = 'rgba(22,171,74,' + (0.07 * (1 - d / 110)) + ')';
           ctx.lineWidth = 0.5;
           ctx.stroke();
         }
@@ -288,12 +288,12 @@ async function handleSubmit(e) {
       form.reset();
       if (typeof gtag === 'function') gtag('event', 'form_submit');
     } else {
-      btn.textContent = 'Something went wrong — please call us.';
+      btn.textContent = 'Something went wrong — please try again.';
       btn.style.background = '#ef4444';
       btn.disabled = false;
     }
   } catch {
-    btn.textContent = 'Something went wrong — please call us.';
+    btn.textContent = 'Something went wrong — please try again.';
     btn.style.background = '#ef4444';
     btn.disabled = false;
   }
